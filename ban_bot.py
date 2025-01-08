@@ -3,12 +3,16 @@ from telegram.ext import Application, CommandHandler
 import asyncio
 
 # Вставьте ваш токен бота здесь
-BOT_TOKEN = ''
+BOT_TOKEN = '7876503306:AAET77Uwc-KOVv6JL844WhyMlC4PwZPeYi0'
 CHANNEL_USERNAME = None  # Юзернейм канала будет установлен пользователем
 
 async def is_admin(bot, chat_id, user_id):
     member = await bot.get_chat_member(chat_id, user_id)
-    return member.status in ['administrator', 'creator'] and member.can_restrict_members
+    if member.status in ['administrator', 'creator']:
+        if member.status == 'creator':
+            return True
+        return member.can_restrict_members
+    return False
 
 async def set_channel(update, context):
     global CHANNEL_USERNAME
